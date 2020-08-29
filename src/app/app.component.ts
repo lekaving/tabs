@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent  {
   public tabs = [ 1, 2 ];
 
-  some = Array.from({length: 2}, () => 0);
+  some = Array.from({length: 5000}, () => 0);
 
   public dec() {
     this.tabs = this.tabs.slice(0, -1);

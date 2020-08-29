@@ -10,6 +10,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { TabContentDef, TabContentOutlet } from './tab-content/tab-content.directive';
 import { TabTitleDirective } from './tab-title.directive';
 import { TabDirective } from './tab.directive';
@@ -57,7 +58,7 @@ export class TabsComponent implements AfterContentInit, OnDestroy {
   }
 
 
-  renderContent(index) {
+  renderContent(index: number) {
     this.tabContent.forEach((outlet) => outlet._viewContainer.clear())
     const outlet = this.tabContent['_results'][index];
     const def = this.tabContentDef['_results'][index];
@@ -70,7 +71,7 @@ export class TabsComponent implements AfterContentInit, OnDestroy {
   ngAfterContentInit() {
     this.renderContent(0);
     this.tabTitles['_results'][0].toggle(true);
-    this.tabs.changes.subscribe((res) => {
+    this.tabs.changes.pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (this.currentIndex + 1 > res.length && !!res.length || res.length === 1) {
         this.currentIndex = 0;
         this.tabTitles['_results'][0].toggle(true);
