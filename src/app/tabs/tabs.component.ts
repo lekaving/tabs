@@ -15,7 +15,6 @@ import { TabContentDef, TabContentOutlet } from './tab-content.directive';
 import { TabTitleDirective } from './tab-title.directive';
 import { TabDirective } from './tab.directive';
 
-
 @Component({
   selector: 'tabs, [tabs]',
   template: `
@@ -40,6 +39,7 @@ export class TabsComponent implements AfterContentInit, OnDestroy {
   // TODO leka: Короче смысл такой что надо найти нужный нод и взять его индекс
   //  По скольку нельзя менять разметку для этой части задания, пришлось что-то подобное придумывать
   //  Так можно обойтись обычным хэндлером на элементе
+  //  И да тут не ниикакх сабжектов или обсерверов, так как в задание был пункт про множество таких компонентов
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
     event.stopPropagation();
