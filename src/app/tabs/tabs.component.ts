@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TabContentDef, TabContentOutlet } from './tab-content/tab-content.directive';
+import { TabContentDef, TabContentOutlet } from './tab-content.directive';
 import { TabTitleDirective } from './tab-title.directive';
 import { TabDirective } from './tab.directive';
 
@@ -37,6 +37,9 @@ export class TabsComponent implements AfterContentInit, OnDestroy {
   constructor(private el: ElementRef) {
   }
 
+  // TODO leka: Короче смысл такой что надо найти нужный нод и взять его индекс
+  //  По скольку нельзя менять разметку для этой части задания, пришлось что-то подобное придумывать
+  //  Так можно обойтись обычным хэндлером на элементе
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
     event.stopPropagation();
@@ -56,7 +59,6 @@ export class TabsComponent implements AfterContentInit, OnDestroy {
     this.tabTitles.forEach((title, i) => title.toggle(i === index));
     this.renderContent(index);
   }
-
 
   renderContent(index: number) {
     this.tabContent.forEach((outlet) => outlet._viewContainer.clear())
