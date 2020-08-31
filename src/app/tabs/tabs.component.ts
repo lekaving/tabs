@@ -39,6 +39,7 @@ export class TabsComponent implements AfterContentInit, OnDestroy {
   // TODO leka: Короче смысл такой что надо найти нужный нод и взять его индекс
   //  По скольку нельзя менять разметку для этой части задания, пришлось что-то подобное придумывать
   //  Так можно обойтись обычным хэндлером на элементе
+  //  Или тем же HostListener, но это должны быть подписки на клик, что так же грузят систему
   //  И это поддерживает какую угодно вложенность в тайтле
   //  И да тут не ниикакх сабжектов или обсерверов, так как в задание был пункт про множество таких компонентов
   @HostListener('click', ['$event'])
@@ -74,7 +75,7 @@ export class TabsComponent implements AfterContentInit, OnDestroy {
   ngAfterContentInit() {
     this.renderContent(0);
     this.tabTitles['_results'][0].toggle(true);
-    this.tabs.changes.pipe(takeUntil(this.destroy$)).subscribe((res) => {
+    this.tabContentDef.changes.pipe(takeUntil(this.destroy$)).subscribe((res) => {
       if (this.currentIndex + 1 > res.length && !!res.length || res.length === 1) {
         this.currentIndex = 0;
         this.tabTitles['_results'][0].toggle(true);
